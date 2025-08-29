@@ -390,7 +390,7 @@ def main():
     ############################################ NOISY/INCOMPLETE NORMAL MAP ###########################################
 
     # Read the noisy/incomplete normal map.
-    normal = read_normal_map(param.normal, 'COLMAP')
+    normal = None
     if normal is None:
         print('WARNING: The noisy/incomplete normal map could not be loaded.')
     else:
