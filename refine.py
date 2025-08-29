@@ -368,17 +368,17 @@ def main():
     ################################################## REFERENCE IMAGE #################################################
 
     # Read the reference image.
-    image = imread(param.image)
+    image = np.load(param.image)
     if image is None:
         raise FileNotFoundError('The reference image could not be loaded.')
 
     # Convert the image to [0, 1] and flip the color channels, as OpenCV assumes that the image is in BGR format on disk.
-    image = np.flip(image.astype(param.precision) / 255, axis=2)
+    image = image.astype(param.precision) / 255
 
     ############################################ NOISY/INCOMPLETE DEPTH MAP ############################################
 
     # Read the noisy/incomplete depth map.
-    depth = read_depth_map(param.depth, 'COLMAP').astype(param.precision)
+    depth = np.load(param.depth)
     if depth is None:
         raise FileNotFoundError('The noisy/incomplete depth map to process could not be loaded.')
 
@@ -402,7 +402,7 @@ def main():
     ################################################## CONFIDENCE MAP ##################################################
 
     # Read the confidence map associated to the noisy/incomplete depth map.
-    depth_confidence = read_depth_map(param.confidence, 'COLMAP').astype(param.precision)
+    depth_confidence = np.load(param.confidence)
 
     # Check the confidence map.
     assert (np.min(depth_confidence) >= 0) and (np.max(depth_confidence) <= 1), \
