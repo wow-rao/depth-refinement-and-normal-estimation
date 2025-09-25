@@ -362,7 +362,7 @@ def write_bin_file(data: np.array, file_name: str) -> None:
         file_name: destination file name.
     """
 
-    np.save('/content/' + file_name + '.npy', data)
+    np.save(file_name + '.npy', data)
 
 
 def load_pfm(file_name: str) -> np.array:
