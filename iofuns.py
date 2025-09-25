@@ -362,33 +362,7 @@ def write_bin_file(data: np.array, file_name: str) -> None:
         file_name: destination file name.
     """
 
-    # Check the input data.
-    assert data.ndim == 2 or data.ndim == 3, 'The input data must be 2D or 3D.'
-
-    # If the input data are 2D, a fake 3D dimension is added. This permits to treat 2D and 3D data the same way.
-    if data.ndim == 2:
-        data = data[:, :, None]
-
-    # Number of color channels.
-    channel_nb = data.shape[2]
-
-    with open(file_name, "wb") as file:
-
-        # Write the file header.
-        file.write(bytearray(str(data.shape[1]), 'utf8'))
-        file.write(bytearray('&', 'utf8'))
-        file.write(bytearray(str(data.shape[0]), 'utf8'))
-        file.write(bytearray('&', 'utf8'))
-        file.write(bytearray(str(channel_nb), 'utf8'))
-        file.write(bytearray('&', 'utf8'))
-
-    # Write the data.
-    with open(file_name, "ab") as file:
-
-        for c in range(channel_nb):
-            for y in range(data.shape[0]):
-                for x in range(data.shape[1]):
-                    file.write(struct.pack('f', data[y, x, c]))
+    np.save('/content/' + file_name + '.npy', data)
 
 
 def load_pfm(file_name: str) -> np.array:
